@@ -70,18 +70,21 @@ public class GankMainView extends Fragment implements BaseView {
         androidFragment = new GankTechFragment();
         Bundle androidBundle = new Bundle();
         androidBundle.putString(Constants.GANK_TECH_TYPE, tabTitle[0]);
+        androidBundle.putInt(Constants.GANK_TECH_CODE, Constants.TYPE_ANDROID);
         androidFragment.setArguments(androidBundle);
         fragments.add(androidFragment);
 
         iosFragment = new GankTechFragment();
         Bundle iosBundle = new Bundle();
         iosBundle.putString(Constants.GANK_TECH_TYPE, tabTitle[1]);
+        iosBundle.putInt(Constants.GANK_TECH_CODE, Constants.TYPE_IOS);
         iosFragment.setArguments(iosBundle);
         fragments.add(iosFragment);
 
         webFragment = new GankTechFragment();
         Bundle webBundle = new Bundle();
         webBundle.putString(Constants.GANK_TECH_TYPE, tabTitle[2]);
+        webBundle.putInt(Constants.GANK_TECH_CODE, Constants.TYPE_WEB);
         webFragment.setArguments(webBundle);
         fragments.add(webFragment);
 

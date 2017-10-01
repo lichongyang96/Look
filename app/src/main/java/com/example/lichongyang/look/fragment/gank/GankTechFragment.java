@@ -1,5 +1,6 @@
 package com.example.lichongyang.look.fragment.gank;
 
+import android.app.Activity;
 import android.media.Image;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -18,6 +19,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.lichongyang.look.R;
+import com.example.lichongyang.look.activity.gank.GankTechDetailActivity;
 import com.example.lichongyang.look.adapter.gank.GankTechAdapter;
 import com.example.lichongyang.look.base.Constants;
 import com.example.lichongyang.look.contract.gank.TechContract;
@@ -46,6 +48,7 @@ public class GankTechFragment extends Fragment implements TechContract.View{
     private GankTechAdapter mAdapter;
 
     private String techType;
+    private int techCode;
 
     private boolean isLoadingMore = false;
     private int index = 1;
@@ -90,11 +93,19 @@ public class GankTechFragment extends Fragment implements TechContract.View{
     @Override
     public void setupView() {
         techType = getArguments().getString(Constants.GANK_TECH_TYPE);
+        techCode = getArguments().getInt(Constants.GANK_TECH_CODE);
         mAdapter = new GankTechAdapter(getContext(), techType);
         mAdapter.setmOnItemClickListener(new GankTechAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, TechBean data) {
-                // TODO: 2017/9/29  techDetail
+                new GankTechDetailActivity.Builder()
+                        .setContext(getContext())
+                        .setId(data.get_id())
+                        .setTitle(data.getDesc())
+                        .setUrl(data.getUrl())
+                        .setCode(techCode)
+                        .setAnimCofig((Activity)getContext(), view)
+                        .launch();
             }
         });
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
