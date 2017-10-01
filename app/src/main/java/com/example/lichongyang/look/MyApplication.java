@@ -1,10 +1,15 @@
 package com.example.lichongyang.look;
 
+import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
+import android.os.Process;
 import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.WindowManager;
+
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by lichongyang on 2017/9/27.
@@ -12,6 +17,8 @@ import android.view.WindowManager;
 
 public class MyApplication extends Application{
     private static volatile MyApplication instance;
+
+    private Set<Activity> activities;
 
     public static int SCREEN_WIDTH = -1;
     public static int SCREEN_HEIGHT = -1;
@@ -30,7 +37,26 @@ public class MyApplication extends Application{
     public void onCreate() {
         super.onCreate();
         instance = this;
+        activities = new HashSet<>();
         getScreenSize();
+    }
+
+    public void addActivity(Activity activity){
+        activities.add(activity);
+    }
+
+    public void removeActivity(Activity activity){
+        activities.remove(activity);
+    }
+
+    public void clearAll(){
+        synchronized (activities){
+            for (Activity activity : activities){
+                activity.finish();
+            }
+        }
+        Process.killProcess(Process.myPid());
+        System.exit(0);
     }
 
     public void getScreenSize(){

@@ -11,8 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.lichongyang.look.R;
-import com.example.lichongyang.look.fragment.gank.GankMainView;
-import com.example.lichongyang.look.model.bean.gank.Tech;
+import com.example.lichongyang.look.fragment.gank.GankMainFragment;
 import com.example.lichongyang.look.model.bean.gank.TechBean;
 import com.example.lichongyang.look.utils.TimeUtils;
 
@@ -46,14 +45,13 @@ public class GankTechAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         TechViewHolder holder1 = (TechViewHolder)holder;
-        if (mTechType == GankMainView.getInstance().getTabTitle()[0]){
+        if (mTechType == GankMainFragment.tabTitle[0]){
             holder1.iconImageView.setImageResource(R.mipmap.ic_android);
-        }else if (mTechType == GankMainView.getInstance().getTabTitle()[1]){
+        }else if (mTechType == GankMainFragment.tabTitle[1]){
             holder1.iconImageView.setImageResource(R.mipmap.ic_ios);
-        }else if (mTechType == GankMainView.getInstance().getTabTitle()[2]){
+        }else if (mTechType == GankMainFragment.tabTitle[2]){
             holder1.iconImageView.setImageResource(R.mipmap.ic_web);
         }
-        Log.d("TAG", techList.get(position).getDesc());
         holder1.titleTextView.setText(techList.get(position).getDesc());
         holder1.authorTextView.setText(techList.get(position).getWho());
         holder1.timeTextView.setText(TimeUtils.formatDateTime(TimeUtils.subStandardTime(techList.get(position).getPublishedAt()), true));

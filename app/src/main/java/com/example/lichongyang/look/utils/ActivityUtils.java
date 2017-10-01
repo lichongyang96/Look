@@ -10,9 +10,11 @@ import android.support.v4.app.FragmentTransaction;
  */
 
 public class ActivityUtils {
-    public static void addFragmentToActivity(FragmentManager manager, Fragment fragment, int frameId){
+    public static void addFragmentToActivity(FragmentManager manager, Fragment showFragment, Fragment hideFragment, int frameId){
         FragmentTransaction transaction = manager.beginTransaction();
-        transaction.add(frameId, fragment);
+        transaction.add(frameId, showFragment);
+        transaction.hide(hideFragment);
+        transaction.show(showFragment);
         transaction.commit();
     }
 }

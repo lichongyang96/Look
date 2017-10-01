@@ -80,7 +80,6 @@ public class GankTechFragment extends Fragment implements TechContract.View{
         mPresenter.unSubscribe();
     }
 
-    @Override
     public void initView(View root) {
         mSwipeRefreshLayout = (SwipeRefreshLayout)root.findViewById(R.id.swipe_refresh);
         mAppBarLayout = (AppBarLayout)root.findViewById(R.id.appbar_tech);
@@ -90,7 +89,6 @@ public class GankTechFragment extends Fragment implements TechContract.View{
         mRecyclerView = (RecyclerView)root.findViewById(R.id.recycle_view_tech);
     }
 
-    @Override
     public void setupView() {
         techType = getArguments().getString(Constants.GANK_TECH_TYPE);
         techCode = getArguments().getInt(Constants.GANK_TECH_CODE);

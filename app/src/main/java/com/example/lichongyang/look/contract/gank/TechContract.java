@@ -12,8 +12,7 @@ import java.util.List;
  */
 
 public interface TechContract {
-    interface View extends BaseView {
-        void setPresenter(Presenter presenter);
+    interface View extends BaseView<Presenter> {
         void showLeastTech(List<TechBean> techList);
         void showMoreTech(List<TechBean> techList);
         void showMeiziImage(List<MeiziBean> meiziList);

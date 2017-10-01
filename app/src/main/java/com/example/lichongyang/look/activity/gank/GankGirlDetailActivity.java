@@ -6,7 +6,6 @@ import android.graphics.Bitmap;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,7 +15,6 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.example.lichongyang.look.R;
-import com.example.lichongyang.look.base.BaseView;
 import com.example.lichongyang.look.base.Constants;
 
 public class GankGirlDetailActivity extends AppCompatActivity{

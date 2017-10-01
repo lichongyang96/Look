@@ -11,8 +11,7 @@ import java.util.List;
  */
 
 public interface MeiziContract {
-    interface View extends BaseView{
-        void setPresenter(Presenter presenter);
+    interface View extends BaseView<Presenter> {
         void showLeastImage(List<MeiziBean> meiziList);
         void showMoreImage(List<MeiziBean> meiziList);
         void showError(String msg);

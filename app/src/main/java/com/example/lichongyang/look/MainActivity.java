@@ -2,7 +2,6 @@ package com.example.lichongyang.look;
 
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
-import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -11,31 +10,40 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.example.lichongyang.look.base.BaseView;
-import com.example.lichongyang.look.fragment.gank.GankMainView;
+import com.example.lichongyang.look.base.BaseActivity;
+import com.example.lichongyang.look.fragment.gank.GankMainFragment;
+import com.example.lichongyang.look.fragment.zhihu.ZhihuMainFragment;
 import com.example.lichongyang.look.utils.ActivityUtils;
 
-public class MainActivity extends AppCompatActivity{
+import me.yokeyword.fragmentation.SupportFragment;
+
+public class MainActivity extends BaseActivity{
     DrawerLayout mDrawerLayout;
     NavigationView mNavigationView;
     Toolbar mToolbar;
 
     ActionBarDrawerToggle mToggle;
+    MenuItem mLastMenuItem;
+
+    GankMainFragment gankMainFragment;
+    ZhihuMainFragment zhihuMainFragment;
+
+    SupportFragment showFragment;
+    SupportFragment hideFragment;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        initView();
-        setupView();
+    protected int getLayoutId() {
+        return R.layout.activity_main;
     }
 
-    private void setupView() {
-        setSupportActionBar(mToolbar);
-        getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        mToggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar, R.string.app_name, R.string.app_name){
+    @Override
+    public void setupView() {
+        setToolbar(mToolbar, "干货");
+        gankMainFragment = new GankMainFragment();
+        zhihuMainFragment = new ZhihuMainFragment();
+        hideFragment = gankMainFragment;
+        mLastMenuItem = mNavigationView.getMenu().findItem(R.id.item_gank);
+        mToggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar, R.string.drawer_open, R.string.drawer_close){
             @Override
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
@@ -48,6 +56,7 @@ public class MainActivity extends AppCompatActivity{
         };
         mToggle.syncState();
         mDrawerLayout.addDrawerListener(mToggle);
+        loadMultipleRootFragment(R.id.fragemt_container, 0, gankMainFragment, zhihuMainFragment);
         mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -58,7 +67,9 @@ public class MainActivity extends AppCompatActivity{
         });
     }
 
-    private void initView() {
+
+    @Override
+    public void initView() {
         mDrawerLayout = (DrawerLayout)findViewById(R.id.drawer);
         mNavigationView = (NavigationView)findViewById(R.id.navigation);
         mToolbar = (Toolbar)findViewById(R.id.toolbar);
@@ -67,11 +78,20 @@ public class MainActivity extends AppCompatActivity{
     private void transaction(MenuItem item){
         switch (item.getItemId()){
             case R.id.item_gank:
-                Fragment fragment = GankMainView.getInstance();
-                ActivityUtils.addFragmentToActivity(getSupportFragmentManager(), fragment, R.id.fragemt_container);
-                mToolbar.setTitle(item.getTitle());
+                showFragment = gankMainFragment;
+                break;
+            case R.id.item_zhihu:
+                showFragment = zhihuMainFragment;
                 break;
         }
+        if (showFragment != null) {
+            showHideFragment(showFragment, hideFragment);
+            mToolbar.setTitle(item.getTitle());
+        }
+        mLastMenuItem.setChecked(false);
+        mLastMenuItem = item;
+        item.setChecked(true);
+        hideFragment = showFragment;
     }
 
 }

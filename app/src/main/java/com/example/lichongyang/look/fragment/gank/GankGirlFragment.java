@@ -10,7 +10,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,13 +17,11 @@ import android.view.ViewGroup;
 import com.example.lichongyang.look.R;
 import com.example.lichongyang.look.activity.gank.GankGirlDetailActivity;
 import com.example.lichongyang.look.adapter.gank.GankGirlAdapter;
-import com.example.lichongyang.look.base.BaseView;
 import com.example.lichongyang.look.base.Constants;
 import com.example.lichongyang.look.contract.gank.MeiziContract;
 import com.example.lichongyang.look.model.bean.gank.MeiziBean;
 import com.example.lichongyang.look.presenter.gank.MeiziPresenter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -75,13 +72,11 @@ public class GankGirlFragment extends Fragment implements MeiziContract.View {
         mPresenter.unSubscribe();
     }
 
-    @Override
     public void initView(View root) {
         mSwipeRefreshLayout = (SwipeRefreshLayout)root.findViewById(R.id.swipe_refresh);
         mRecyclerView = (RecyclerView)root.findViewById(R.id.recycle_view);
     }
 
-    @Override
     public void setupView() {
         mAdapter = new GankGirlAdapter(getContext());
         mStaggeredGridLayoutManager = new StaggeredGridLayoutManager(SPAN_COUNT, StaggeredGridLayoutManager.VERTICAL);

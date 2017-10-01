@@ -11,22 +11,24 @@ import android.view.ViewGroup;
 
 import com.example.lichongyang.look.R;
 import com.example.lichongyang.look.adapter.gank.GankMainAdapter;
-import com.example.lichongyang.look.base.BaseView;
+import com.example.lichongyang.look.base.BaseFragment;
 import com.example.lichongyang.look.base.Constants;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import me.yokeyword.fragmentation.SupportFragment;
 
 /**
  * gank主页
  * Created by lichongyang on 2017/9/27.
  */
 
-public class GankMainView extends Fragment implements BaseView {
+public class GankMainFragment extends BaseFragment{
     private TabLayout mTabLayout;
     private ViewPager mViewPager;
 
-    private static String[] tabTitle = new String[]{"Android", "iOS", "前端", "妹子"};
+    public static String[] tabTitle = new String[]{"Android", "iOS", "前端", "妹子"};
     private List<Fragment> fragments = new ArrayList<>();
 
     GankMainAdapter mAdapter;
@@ -35,38 +37,8 @@ public class GankMainView extends Fragment implements BaseView {
     GankTechFragment webFragment;
     GankGirlFragment girlFragment;
 
-    public GankMainView(){}
-
-    public static GankMainView getInstance(){
-        return new GankMainView();
-    }
-
-    public String[] getTabTitle(){
-        return tabTitle;
-    }
-
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_gank_main, container, false);
-        initView(root);
-        setupView();
-        return root;
-    }
-
-    public void initView(View root) {
-        mTabLayout = (TabLayout)root.findViewById(R.id.tab_gank_main);
-        mViewPager = (ViewPager)root.findViewById(R.id.vp_gank_main);
-    }
-
-    public void setupView(){
-
-
+    protected void setupView() {
         androidFragment = new GankTechFragment();
         Bundle androidBundle = new Bundle();
         androidBundle.putString(Constants.GANK_TECH_TYPE, tabTitle[0]);
@@ -103,7 +75,17 @@ public class GankMainView extends Fragment implements BaseView {
         mTabLayout.getTabAt(1).setText(tabTitle[1]);
         mTabLayout.getTabAt(2).setText(tabTitle[2]);
         mTabLayout.getTabAt(3).setText(tabTitle[3]);
-
-
     }
+
+    @Override
+    protected void initView(View view) {
+        mTabLayout = (TabLayout)view.findViewById(R.id.tab_gank_main);
+        mViewPager = (ViewPager)view.findViewById(R.id.vp_gank_main);
+    }
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.fragment_gank_main;
+    }
+
 }
