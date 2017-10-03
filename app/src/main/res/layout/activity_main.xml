@@ -2,7 +2,10 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark">
+
+
     <android.support.v4.widget.DrawerLayout
         android:id="@+id/drawer"
         android:scrollbars="none"
@@ -13,10 +16,15 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-            <include layout="@layout/toolbar"
-                android:id="@+id/toolbar" />
             <FrameLayout
-                android:id="@+id/fragemt_container"
+                android:id="@+id/fragment_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <include layout="@layout/toolbar"
+                    android:id="@+id/toolbar" />
+            </FrameLayout>
+            <FrameLayout
+                android:id="@+id/fragment_container"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
         </LinearLayout>

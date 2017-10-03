@@ -11,6 +11,9 @@ public class Constants {
 
 
     public static final String GANK_BASE_URL = "http://gank.io/";
+    public static final String ZHIHU_BASE_URL = "https://news-at.zhihu.com/api/4/";
+
+
     public static final String GANK_GIRL_URL = "gank_girl_url";
     public static final String GANK_GIRL_ID = "gank_girl_id";
     public static final String GANK_TECH_TYPE = "gank_tech_type";

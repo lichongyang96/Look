@@ -19,7 +19,7 @@ public abstract class BaseFragment extends SupportFragment{
     protected View mView;
     protected Activity mActivity;
     protected Context mContext;
-    protected boolean isInited = false;
+   // protected boolean isInited = false;
 
     @Override
     public void onAttach(Context context) {
@@ -39,14 +39,15 @@ public abstract class BaseFragment extends SupportFragment{
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initView(view);
-    }
-
-    @Override
-    public void onLazyInitView(@Nullable Bundle savedInstanceState) {
-        super.onLazyInitView(savedInstanceState);
-        isInited = true;
         setupView();
     }
+//
+//    @Override
+//    public void onLazyInitView(@Nullable Bundle savedInstanceState) {
+//        super.onLazyInitView(savedInstanceState);
+//        isInited = true;
+//        //setupView();
+//    }
 
     protected abstract void setupView();
 

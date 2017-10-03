@@ -10,6 +10,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,7 @@ import android.view.ViewGroup;
 import com.example.lichongyang.look.R;
 import com.example.lichongyang.look.activity.gank.GankGirlDetailActivity;
 import com.example.lichongyang.look.adapter.gank.GankGirlAdapter;
+import com.example.lichongyang.look.base.BaseFragment;
 import com.example.lichongyang.look.base.Constants;
 import com.example.lichongyang.look.contract.gank.MeiziContract;
 import com.example.lichongyang.look.model.bean.gank.MeiziBean;
@@ -29,7 +31,7 @@ import java.util.List;
  * Created by lichongyang on 2017/9/27.
  */
 
-public class GankGirlFragment extends Fragment implements MeiziContract.View {
+public class GankGirlFragment extends BaseFragment implements MeiziContract.View {
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private RecyclerView mRecyclerView;
 
@@ -43,21 +45,10 @@ public class GankGirlFragment extends Fragment implements MeiziContract.View {
 
     private int index = 1;
 
-
-
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.view_common_list, container, false);
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         mPresenter = new MeiziPresenter(this);
-        initView(root);
-        setupView();
-        return root;
     }
 
     @Override
@@ -72,18 +63,28 @@ public class GankGirlFragment extends Fragment implements MeiziContract.View {
         mPresenter.unSubscribe();
     }
 
-    public void initView(View root) {
-        mSwipeRefreshLayout = (SwipeRefreshLayout)root.findViewById(R.id.swipe_refresh);
-        mRecyclerView = (RecyclerView)root.findViewById(R.id.recycle_view);
+    @Override
+    protected int getLayoutId() {
+        return R.layout.view_common_list;
     }
 
-    public void setupView() {
+    @Override
+    protected void initView(View view) {
+        mSwipeRefreshLayout = (SwipeRefreshLayout)view.findViewById(R.id.swipe_refresh);
+        mRecyclerView = (RecyclerView)view.findViewById(R.id.recycle_view);
+    }
+
+    @Override
+    protected void setupView() {
         mAdapter = new GankGirlAdapter(getContext());
         mStaggeredGridLayoutManager = new StaggeredGridLayoutManager(SPAN_COUNT, StaggeredGridLayoutManager.VERTICAL);
         mStaggeredGridLayoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_NONE);
         mStaggeredGridLayoutManager.setItemPrefetchEnabled(false);
         mRecyclerView.setLayoutManager(mStaggeredGridLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
+        mSwipeRefreshLayout.setProgressViewOffset(true, 0,
+                (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
+                        100, getResources().getDisplayMetrics()));
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {

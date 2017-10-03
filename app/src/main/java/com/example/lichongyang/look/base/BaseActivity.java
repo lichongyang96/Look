@@ -1,10 +1,12 @@
 package com.example.lichongyang.look.base;
 
 import android.app.Activity;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.WindowManager;
 
 import com.example.lichongyang.look.MyApplication;
 
@@ -21,6 +23,10 @@ public abstract class BaseActivity extends SupportActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(getLayoutId());
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT){
+            WindowManager.LayoutParams localLayoutParams = getWindow().getAttributes();
+            localLayoutParams.flags = (WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS | localLayoutParams.flags);
+        }
         mContext = this;
         MyApplication.getInstance().addActivity(this);
         initView();
@@ -30,7 +36,6 @@ public abstract class BaseActivity extends SupportActivity {
     protected void setToolbar(Toolbar toolbar, String title){
         toolbar.setTitle(title);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {

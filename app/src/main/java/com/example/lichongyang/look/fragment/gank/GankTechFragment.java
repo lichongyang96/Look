@@ -10,6 +10,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.lichongyang.look.R;
 import com.example.lichongyang.look.activity.gank.GankTechDetailActivity;
 import com.example.lichongyang.look.adapter.gank.GankTechAdapter;
+import com.example.lichongyang.look.base.BaseFragment;
 import com.example.lichongyang.look.base.Constants;
 import com.example.lichongyang.look.contract.gank.TechContract;
 import com.example.lichongyang.look.model.bean.gank.MeiziBean;
@@ -36,7 +38,7 @@ import jp.wasabeef.glide.transformations.BlurTransformation;
  * Created by lichongyang on 2017/9/27.
  */
 
-public class GankTechFragment extends Fragment implements TechContract.View{
+public class GankTechFragment extends BaseFragment implements TechContract.View{
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private AppBarLayout mAppBarLayout;
     private ImageView techBlurImageView;
@@ -54,18 +56,9 @@ public class GankTechFragment extends Fragment implements TechContract.View{
     private int index = 1;
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_gank_tech, container, false);
-        initView(root);
-        setupView();
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         mPresenter = new TechPresenter(this, techType);
-        return root;
     }
 
     @Override
@@ -80,16 +73,23 @@ public class GankTechFragment extends Fragment implements TechContract.View{
         mPresenter.unSubscribe();
     }
 
-    public void initView(View root) {
-        mSwipeRefreshLayout = (SwipeRefreshLayout)root.findViewById(R.id.swipe_refresh);
-        mAppBarLayout = (AppBarLayout)root.findViewById(R.id.appbar_tech);
-        techBlurImageView = (ImageView)root.findViewById(R.id.iv_tech_blur);
-        techOriginIamgeView = (ImageView)root.findViewById(R.id.iv_tech_origin);
-        techCopyrightTextView = (TextView)root.findViewById(R.id.tv_tech_copyright);
-        mRecyclerView = (RecyclerView)root.findViewById(R.id.recycle_view_tech);
+    @Override
+    protected int getLayoutId() {
+        return R.layout.fragment_gank_tech;
     }
 
-    public void setupView() {
+    @Override
+    protected void initView(View view) {
+        mSwipeRefreshLayout = (SwipeRefreshLayout)view.findViewById(R.id.swipe_refresh);
+        mAppBarLayout = (AppBarLayout)view.findViewById(R.id.appbar_tech);
+        techBlurImageView = (ImageView)view.findViewById(R.id.iv_tech_blur);
+        techOriginIamgeView = (ImageView)view.findViewById(R.id.iv_tech_origin);
+        techCopyrightTextView = (TextView)view.findViewById(R.id.tv_tech_copyright);
+        mRecyclerView = (RecyclerView)view.findViewById(R.id.recycle_view_tech);
+    }
+
+    @Override
+    protected void setupView() {
         techType = getArguments().getString(Constants.GANK_TECH_TYPE);
         techCode = getArguments().getInt(Constants.GANK_TECH_CODE);
         mAdapter = new GankTechAdapter(getContext(), techType);
@@ -123,6 +123,9 @@ public class GankTechFragment extends Fragment implements TechContract.View{
         });
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerView.setAdapter(mAdapter);
+        mSwipeRefreshLayout.setProgressViewOffset(true, 0,
+                (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
+                        100, getResources().getDisplayMetrics()));
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {

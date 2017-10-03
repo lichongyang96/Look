@@ -56,7 +56,8 @@ public class MainActivity extends BaseActivity{
         };
         mToggle.syncState();
         mDrawerLayout.addDrawerListener(mToggle);
-        loadMultipleRootFragment(R.id.fragemt_container, 0, gankMainFragment, zhihuMainFragment);
+        //加载多个同级fragment
+        loadMultipleRootFragment(R.id.fragment_container, 0, gankMainFragment, zhihuMainFragment);
         mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {

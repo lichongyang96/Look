@@ -18,4 +18,5 @@ public class PiexlUtils {
         final float scale = MyApplication.getContext().getResources().getDisplayMetrics().density;
         return (int)(dpValue * scale + 0.5f);
     }
+
 }

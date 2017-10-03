@@ -23,9 +23,9 @@ public class TechPresenter implements TechContract.Presenter{
 
     private String currentType;
 
-    public TechPresenter(TechContract.View view, String currentTypet){
+    public TechPresenter(TechContract.View view, String currentType){
         this.techView = view;
-        this.currentType = currentTypet;
+        this.currentType = currentType;
         techView.setPresenter(this);
         mCompositeDisposable = new CompositeDisposable();
     }
