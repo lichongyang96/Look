@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.example.lichongyang.look.MyApplication;
 import com.example.lichongyang.look.R;
+import com.example.lichongyang.look.base.BaseActivity;
 import com.example.lichongyang.look.base.Constants;
 import com.example.lichongyang.look.utils.NetWorkUtils;
 import com.tencent.smtt.sdk.WebChromeClient;
@@ -28,10 +29,10 @@ import com.tencent.smtt.sdk.WebViewClient;
  * Created by lichongyang on 2017/10/1.
  */
 
-public class GankTechDetailActivity extends AppCompatActivity{
-    private WebView mWebView;
-    private TextView mTextView;
-    private Toolbar mToolbar;
+public class GankTechDetailActivity extends BaseActivity{
+    private WebView webView;
+    private TextView textView;
+    private Toolbar toolbar;
 
     private MenuItem menuItem;
     private boolean isLiked;
@@ -42,21 +43,21 @@ public class GankTechDetailActivity extends AppCompatActivity{
     private String id;
     private int code;
 
+
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_gank_tech_detail);
-        init();
-        setupView();
+    protected int getLayoutId() {
+        return R.layout.activity_gank_tech_detail;
     }
 
-    private void init(){
-        mTextView = (TextView)findViewById(R.id.tv_tech_detail_progress);
-        mWebView = (WebView)findViewById(R.id.wv_tech_detail);
-        mToolbar = (Toolbar)findViewById(R.id.toolbar);
+    @Override
+    protected void initView(){
+        textView = (TextView)findViewById(R.id.tv_tech_detail_progress);
+        webView = (WebView)findViewById(R.id.wv_tech_detail);
+        toolbar = (Toolbar)findViewById(R.id.toolbar);
     }
 
-    private void setupView(){
+    @Override
+    protected void setupView(){
         Intent intent = getIntent();
         title = intent.getExtras().getString(Constants.GANK_TECH_TITLE);
         url = intent.getExtras().getString(Constants.GANK_TECH_URL);
@@ -64,18 +65,10 @@ public class GankTechDetailActivity extends AppCompatActivity{
         id = intent.getExtras().getString(Constants.GANK_TECH_ID);
         code = intent.getExtras().getInt(Constants.GANK_TECH_CODE);
 
-        mToolbar.setTitle(title);
-        setSupportActionBar(mToolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onBackPressed();
-            }
-        });
+        setToolbar(toolbar, title);
 
-        final WebSettings webSettings = mWebView.getSettings();
+
+        final WebSettings webSettings = webView.getSettings();
         webSettings.setBlockNetworkImage(true);
         webSettings.setAppCacheEnabled(true);
         webSettings.setDomStorageEnabled(true);
@@ -90,25 +83,25 @@ public class GankTechDetailActivity extends AppCompatActivity{
         webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
         webSettings.setSupportZoom(true);
 
-        mWebView.setWebViewClient(new WebViewClient(){
+        webView.setWebViewClient(new WebViewClient(){
             @Override
             public boolean shouldOverrideUrlLoading(WebView webView, String s) {
                 webView.loadUrl(s);
                 return true;
             }
         });
-        mWebView.setWebChromeClient(new WebChromeClient(){
+        webView.setWebChromeClient(new WebChromeClient(){
             @Override
             public void onProgressChanged(WebView webView, int i) {
                 super.onProgressChanged(webView, i);
-                if (mTextView == null){
+                if (textView == null){
                     return;
                 }
                 if (i == 100){
-                    mTextView.setVisibility(View.GONE);
+                    textView.setVisibility(View.GONE);
                 }else{
-                    mTextView.setVisibility(View.VISIBLE);
-                    ViewGroup.LayoutParams lp = mTextView.getLayoutParams();
+                    textView.setVisibility(View.VISIBLE);
+                    ViewGroup.LayoutParams lp = textView.getLayoutParams();
                     lp.width = MyApplication.SCREEN_WIDTH * i / 100;
                 }
             }
@@ -119,13 +112,13 @@ public class GankTechDetailActivity extends AppCompatActivity{
                 setTitle(s);
             }
         });
-        mWebView.loadUrl(url);
+        webView.loadUrl(url);
     }
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK && mWebView.canGoBack()){
-            mWebView.goBack();
+        if (keyCode == KeyEvent.KEYCODE_BACK && webView.canGoBack()){
+            webView.goBack();
             return true;
         }
         return super.onKeyDown(keyCode, event);

@@ -9,6 +9,8 @@
     <color name="trangery">#512e2e2e</color>
     <color name="grey">#FAFAFA</color>
     <color name="colorCard">#FFFFFF</color>
+    <color name="bottom_text">#a9a9a9</color>
+    <color name="black_bg">#d0000000</color>
     <color name="drawer_item_bg_n">#fffff9</color>
     <color name="drawer_item_bg_p">#e8e8e8</color>
 </resources>

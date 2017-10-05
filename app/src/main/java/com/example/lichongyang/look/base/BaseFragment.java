@@ -41,13 +41,6 @@ public abstract class BaseFragment extends SupportFragment{
         initView(view);
         setupView();
     }
-//
-//    @Override
-//    public void onLazyInitView(@Nullable Bundle savedInstanceState) {
-//        super.onLazyInitView(savedInstanceState);
-//        isInited = true;
-//        //setupView();
-//    }
 
     protected abstract void setupView();
 

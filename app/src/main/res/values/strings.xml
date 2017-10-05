@@ -9,4 +9,8 @@
     <string name="action_save">保存到本地</string>
     <string name="action_share">分享链接</string>
     <string name="action_like">收藏</string>
+
+    <string name="detail_bottom_share">分享</string>
+    <string name="detail_bottom_like">点赞</string>
+    <string name="detail_bottom_commit">评论</string>
 </resources>

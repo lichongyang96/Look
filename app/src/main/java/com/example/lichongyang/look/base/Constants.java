@@ -22,4 +22,6 @@ public class Constants {
     public static final String GANK_TECH_IMAGE_URL = "gank_tech_image_url";
     public static final String GANK_TECH_ID = "gank_tech_id";
     public static final String GANK_TECH_TITLE = "gank_tech_title";
+
+    public static final String ZHIHU_DAILY_DETAIL_ID = "zhihu_daily_detail_id";
 }

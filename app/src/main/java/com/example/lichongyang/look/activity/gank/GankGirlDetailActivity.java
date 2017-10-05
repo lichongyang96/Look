@@ -15,12 +15,12 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.example.lichongyang.look.R;
+import com.example.lichongyang.look.base.BaseActivity;
 import com.example.lichongyang.look.base.Constants;
 
-public class GankGirlDetailActivity extends AppCompatActivity{
+public class GankGirlDetailActivity extends BaseActivity{
     private Toolbar toolbar;
     private ImageView girlImageView;
-    private Context mContext;
 
     private String url;
     private String id;
@@ -29,32 +29,21 @@ public class GankGirlDetailActivity extends AppCompatActivity{
     private MenuItem menuItem;
     private boolean isLiked;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_gank_girl_detail);
-        mContext = this;
-        init();
-        setView();
 
+    @Override
+    protected int getLayoutId() {
+        return R.layout.activity_gank_girl_detail;
     }
 
-    private void init() {
+    @Override
+    protected void initView() {
         toolbar = (Toolbar)findViewById(R.id.toolbar);
         girlImageView = (ImageView)findViewById(R.id.iv_gank_girl_detail);
     }
 
-    private void setView(){
-        toolbar.setTitle("");
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onBackPressed();
-            }
-        });
+    @Override
+    protected void setupView(){
+        setToolbar(toolbar, "");
         Intent intent = getIntent();
         url = intent.getExtras().getString(Constants.GANK_GIRL_URL);
         id = intent.getExtras().getString(Constants.GANK_GIRL_ID);

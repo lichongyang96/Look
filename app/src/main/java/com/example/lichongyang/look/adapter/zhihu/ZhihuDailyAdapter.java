@@ -1,8 +1,10 @@
 package com.example.lichongyang.look.adapter.zhihu;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +15,9 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.lichongyang.look.R;
+import com.example.lichongyang.look.activity.zhihu.ZhihuDailyDetailActivity;
+import com.example.lichongyang.look.adapter.gank.GankTechAdapter;
+import com.example.lichongyang.look.base.Constants;
 import com.example.lichongyang.look.contract.gank.MeiziContract;
 import com.example.lichongyang.look.model.bean.gank.MeiziBean;
 import com.example.lichongyang.look.model.bean.gank.TechBean;
@@ -42,6 +47,7 @@ public class ZhihuDailyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     public static final int TYPE_TOP = -1;
     public static final int TYPE_FOOTER = -2;
+
 
     public ZhihuDailyAdapter(Context context, ZhihuDaily zhihuDaily){
         this.mContext = context;
@@ -116,6 +122,7 @@ public class ZhihuDailyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         }
     }
 
+
     class TopItemViewHolder extends RecyclerView.ViewHolder{
         ZhihuTopNewsViewPager viewPager;
         TextView textView;
@@ -130,8 +137,10 @@ public class ZhihuDailyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             viewPager.init(zhihuDailyTopItems, textView, new ZhihuTopNewsViewPager.ViewPagerClickListener(){
                 @Override
                 public void onClick(ZhihuDailyTopItem item) {
-                    // TODO: 2017/10/3 启动文章详情页面 
-                    mContext.startActivity(null);
+                    Intent intent = new Intent();
+                    intent.setClass(mContext, ZhihuDailyDetailActivity.class);
+                    intent.putExtra(Constants.ZHIHU_DAILY_DETAIL_ID, item.getId());
+                    mContext.startActivity(intent);
                 }
             });
         }
@@ -193,10 +202,13 @@ public class ZhihuDailyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             cardView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    // TODO: 2017/10/3 启动文章详情页面
-                    mContext.startActivity(null);
+                    Intent intent = new Intent();
+                    intent.setClass(mContext, ZhihuDailyDetailActivity.class);
+                    intent.putExtra(Constants.ZHIHU_DAILY_DETAIL_ID, String.valueOf(item.getId()));
+                    mContext.startActivity(intent);
                 }
             });
         }
     }
+
 }
