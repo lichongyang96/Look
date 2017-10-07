@@ -76,7 +76,7 @@ public class GankGirlFragment extends BaseFragment implements MeiziContract.View
 
     @Override
     protected void setupView() {
-        mAdapter = new GankGirlAdapter(getContext());
+        mAdapter = new GankGirlAdapter(mContext);
         mStaggeredGridLayoutManager = new StaggeredGridLayoutManager(SPAN_COUNT, StaggeredGridLayoutManager.VERTICAL);
         mStaggeredGridLayoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_NONE);
         mStaggeredGridLayoutManager.setItemPrefetchEnabled(false);
@@ -110,11 +110,11 @@ public class GankGirlFragment extends BaseFragment implements MeiziContract.View
             @Override
             public void onItemClickListener(View view, MeiziBean data) {
                 Intent intent = new Intent();
-                intent.setClass(getContext(), GankGirlDetailActivity.class);
+                intent.setClass(mContext, GankGirlDetailActivity.class);
                 intent.putExtra(Constants.GANK_GIRL_URL, data.getUrl());
                 intent.putExtra(Constants.GANK_GIRL_ID, data.get_id());
-                ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation((Activity)getContext(), view, "shareView");
-                getContext().startActivity(intent, options.toBundle());
+                ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(mActivity, view, "shareView");
+                mContext.startActivity(intent, options.toBundle());
             }
         });
     }

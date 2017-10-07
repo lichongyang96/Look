@@ -92,17 +92,17 @@ public class GankTechFragment extends BaseFragment implements TechContract.View{
     protected void setupView() {
         techType = getArguments().getString(Constants.GANK_TECH_TYPE);
         techCode = getArguments().getInt(Constants.GANK_TECH_CODE);
-        mAdapter = new GankTechAdapter(getContext(), techType);
+        mAdapter = new GankTechAdapter(mContext, techType);
         mAdapter.setmOnItemClickListener(new GankTechAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, TechBean data) {
                 new GankTechDetailActivity.Builder()
-                        .setContext(getContext())
+                        .setContext(mContext)
                         .setId(data.get_id())
                         .setTitle(data.getDesc())
                         .setUrl(data.getUrl())
                         .setCode(techCode)
-                        .setAnimCofig((Activity)getContext(), view)
+                        .setAnimCofig(mActivity, view)
                         .launch();
             }
         });
@@ -121,7 +121,7 @@ public class GankTechFragment extends BaseFragment implements TechContract.View{
                 }
             }
         });
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         mRecyclerView.setAdapter(mAdapter);
         mSwipeRefreshLayout.setProgressViewOffset(true, 0,
                 (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
@@ -142,7 +142,7 @@ public class GankTechFragment extends BaseFragment implements TechContract.View{
                     mSwipeRefreshLayout.setEnabled(true);
                 } else {
                     mSwipeRefreshLayout.setEnabled(false);
-                    float rate = (float)(PiexlUtils.dp2px(getContext(), 256) + verticalOffset * 2) / PiexlUtils.dp2px(getContext(), 256);
+                    float rate = (float)(PiexlUtils.dp2px(mContext, 256) + verticalOffset * 2) / PiexlUtils.dp2px(mContext, 256);
                     if (rate >= 0)
                         techOriginIamgeView.setAlpha(rate);
                 }
@@ -172,10 +172,10 @@ public class GankTechFragment extends BaseFragment implements TechContract.View{
 
     @Override
     public void showMeiziImage(List<MeiziBean> meiziList) {
-        Glide.with(getContext()).load(meiziList.get(0).getUrl())
+        Glide.with(mContext).load(meiziList.get(0).getUrl())
                 .crossFade().diskCacheStrategy(DiskCacheStrategy.SOURCE).into(techOriginIamgeView);
-        Glide.with(getContext()).load(meiziList.get(0).getUrl())
-                .bitmapTransform(new BlurTransformation(getContext(), null)).into(techBlurImageView);
+        Glide.with(mContext).load(meiziList.get(0).getUrl())
+                .bitmapTransform(new BlurTransformation(mContext, null)).into(techBlurImageView);
         techCopyrightTextView.setText(String.format("by: %s", meiziList.get(0).getWho()));
     }
 

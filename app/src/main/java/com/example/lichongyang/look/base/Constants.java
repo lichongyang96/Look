@@ -24,4 +24,5 @@ public class Constants {
     public static final String GANK_TECH_TITLE = "gank_tech_title";
 
     public static final String ZHIHU_DAILY_DETAIL_ID = "zhihu_daily_detail_id";
+    public static final String ZHIHU_THEME_CONTENT_ID = "zhihu_theme_content_id";
 }

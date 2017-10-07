@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="detail_image_height">300dp</dimen>
+    <dimen name="theme_image_height">120dp</dimen>
+    <dimen name="list_image_size">75dp</dimen>
 </resources>

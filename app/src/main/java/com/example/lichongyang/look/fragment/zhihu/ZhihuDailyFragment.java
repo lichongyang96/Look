@@ -90,7 +90,7 @@ public class ZhihuDailyFragment extends BaseFragment implements ZhihuDailyContra
             mAdapter.notifyDataSetChanged();
         }else{
             timeLine = zhihuDaily;
-            mAdapter = new ZhihuDailyAdapter(getContext(), zhihuDaily);
+            mAdapter = new ZhihuDailyAdapter(mContext, zhihuDaily);
             mRecyclerView.setAdapter(mAdapter);
             mAdapter.notifyDataSetChanged();
         }
@@ -99,7 +99,7 @@ public class ZhihuDailyFragment extends BaseFragment implements ZhihuDailyContra
 
     @Override
     protected void setupView() {
-        mLinearLayoutManager = new LinearLayoutManager(getContext());
+        mLinearLayoutManager = new LinearLayoutManager(mContext);
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
         mSwipeRefreshLayout.setProgressViewOffset(true, 0,
                 (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
