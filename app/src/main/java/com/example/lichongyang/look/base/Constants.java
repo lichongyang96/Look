@@ -25,4 +25,6 @@ public class Constants {
 
     public static final String ZHIHU_DAILY_DETAIL_ID = "zhihu_daily_detail_id";
     public static final String ZHIHU_THEME_CONTENT_ID = "zhihu_theme_content_id";
+    public static final String ZHIHU_SECTION_CONTENT_ID = "zhihu_section_content_id";
+    public static final String ZHIHU_SECTION_CONTENT_TITLE = "zhihu_section_content_title";
 }

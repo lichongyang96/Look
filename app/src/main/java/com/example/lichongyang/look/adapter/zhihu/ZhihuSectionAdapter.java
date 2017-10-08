@@ -12,10 +12,11 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.lichongyang.look.R;
-import com.example.lichongyang.look.activity.zhihu.ZhihuDailyDetailActivity;
+import com.example.lichongyang.look.activity.zhihu.ZhihuSectionContentActivity;
 import com.example.lichongyang.look.activity.zhihu.ZhihuThemeContentActivity;
 import com.example.lichongyang.look.base.Constants;
-import com.example.lichongyang.look.model.bean.zhihu.ZhihuThemeContent;
+import com.example.lichongyang.look.model.bean.zhihu.ZhihuSection;
+import com.example.lichongyang.look.model.bean.zhihu.ZhihuSectionItem;
 import com.example.lichongyang.look.model.bean.zhihu.ZhihuThemeItem;
 
 import java.util.ArrayList;
@@ -24,12 +25,12 @@ import java.util.ArrayList;
  * Created by lichongyang on 2017/10/7.
  */
 
-public class ZhihuThemeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
+public class ZhihuSectionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     private Context mContext;
     private LayoutInflater inflater;
-    private ArrayList<ZhihuThemeItem> items;
+    private ArrayList<ZhihuSectionItem> items;
 
-    public ZhihuThemeAdapter(Context context){
+    public ZhihuSectionAdapter(Context context){
         this.mContext = context;
         inflater = LayoutInflater.from(mContext);
         items = new ArrayList<>();
@@ -37,7 +38,7 @@ public class ZhihuThemeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new ItemViewHolder(inflater.inflate(R.layout.item_zhihu_theme, parent, false));
+        return new ItemViewHolder(inflater.inflate(R.layout.item_zhihu_section, parent, false));
     }
 
     @Override
@@ -50,7 +51,7 @@ public class ZhihuThemeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         return items.size();
     }
 
-    public void showThemeList(ArrayList<ZhihuThemeItem> newItems){
+    public void showSectionList(ArrayList<ZhihuSectionItem> newItems){
         if(items != null && items.size() > 0){
             items.clear();
         }
@@ -58,29 +59,31 @@ public class ZhihuThemeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         notifyDataSetChanged();
     }
 
-
     private class ItemViewHolder extends RecyclerView.ViewHolder{
         CardView cardView;
         ImageView imageView;
-        TextView textView;
+        TextView titleTextView;
+        TextView desTextView;
 
         public ItemViewHolder(View itemView) {
             super(itemView);
-            cardView = (CardView)itemView.findViewById(R.id.cv_zhihu_theme_item);
-            imageView = (ImageView)itemView.findViewById(R.id.iv_zhihu_theme_bg);
-            textView = (TextView)itemView.findViewById(R.id.tv_zhihu_theme_title);
+            cardView = (CardView)itemView.findViewById(R.id.cv_zhihu_section_item);
+            imageView = (ImageView)itemView.findViewById(R.id.iv_zhihu_section_bg);
+            titleTextView = (TextView)itemView.findViewById(R.id.tv_zhihu_section_title);
+            desTextView = (TextView)itemView.findViewById(R.id.tv_zhihu_section_des);
         }
 
-        public void bindItem(final ZhihuThemeItem zhihuThemeItem){
-            String id = zhihuThemeItem.getId();
-            Glide.with(mContext).load(zhihuThemeItem.getThumbnail()).centerCrop().into(imageView);
-            textView.setText(zhihuThemeItem.getName());
+        public void bindItem(final ZhihuSectionItem zhihuSectionItem){
+            Glide.with(mContext).load(zhihuSectionItem.getThumbnail()).centerCrop().into(imageView);
+            titleTextView.setText(zhihuSectionItem.getName());
+            desTextView.setText(zhihuSectionItem.getDescription());
             cardView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent();
-                    intent.setClass(mContext, ZhihuThemeContentActivity.class);
-                    intent.putExtra(Constants.ZHIHU_THEME_CONTENT_ID, String.valueOf(zhihuThemeItem.getId()));
+                    intent.setClass(mContext, ZhihuSectionContentActivity.class);
+                    intent.putExtra(Constants.ZHIHU_SECTION_CONTENT_ID, String.valueOf(zhihuSectionItem.getId()));
+                    intent.putExtra(Constants.ZHIHU_SECTION_CONTENT_TITLE, zhihuSectionItem.getName());
                     mContext.startActivity(intent);
                 }
             });

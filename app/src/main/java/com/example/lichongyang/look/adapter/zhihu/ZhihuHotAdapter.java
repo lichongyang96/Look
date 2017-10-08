@@ -13,23 +13,23 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.lichongyang.look.R;
 import com.example.lichongyang.look.activity.zhihu.ZhihuDailyDetailActivity;
-import com.example.lichongyang.look.activity.zhihu.ZhihuThemeContentActivity;
 import com.example.lichongyang.look.base.Constants;
-import com.example.lichongyang.look.model.bean.zhihu.ZhihuThemeContent;
-import com.example.lichongyang.look.model.bean.zhihu.ZhihuThemeItem;
+import com.example.lichongyang.look.model.bean.zhihu.ZhihuHotItem;
+import com.example.lichongyang.look.model.bean.zhihu.ZhihuThemeStory;
 
 import java.util.ArrayList;
 
 /**
+ * todo: glide加载图片错位问题。
  * Created by lichongyang on 2017/10/7.
  */
 
-public class ZhihuThemeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
+public class ZhihuHotAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     private Context mContext;
     private LayoutInflater inflater;
-    private ArrayList<ZhihuThemeItem> items;
+    private ArrayList<ZhihuHotItem> items;
 
-    public ZhihuThemeAdapter(Context context){
+    public ZhihuHotAdapter(Context context){
         this.mContext = context;
         inflater = LayoutInflater.from(mContext);
         items = new ArrayList<>();
@@ -37,7 +37,7 @@ public class ZhihuThemeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new ItemViewHolder(inflater.inflate(R.layout.item_zhihu_theme, parent, false));
+        return new ItemViewHolder(inflater.inflate(R.layout.item_zhihu_daily, parent, false));
     }
 
     @Override
@@ -50,41 +50,44 @@ public class ZhihuThemeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         return items.size();
     }
 
-    public void showThemeList(ArrayList<ZhihuThemeItem> newItems){
-        if(items != null && items.size() > 0){
+    public void showLeastContent(ArrayList<ZhihuHotItem> newItems){
+        if (items != null && items.size() > 0){
             items.clear();
         }
-        items = newItems;
+        items.addAll(newItems);
         notifyDataSetChanged();
     }
 
 
     private class ItemViewHolder extends RecyclerView.ViewHolder{
-        CardView cardView;
-        ImageView imageView;
         TextView textView;
+        ImageView imageView;
+        CardView cardView;
 
         public ItemViewHolder(View itemView) {
             super(itemView);
-            cardView = (CardView)itemView.findViewById(R.id.cv_zhihu_theme_item);
-            imageView = (ImageView)itemView.findViewById(R.id.iv_zhihu_theme_bg);
-            textView = (TextView)itemView.findViewById(R.id.tv_zhihu_theme_title);
+            textView = (TextView)itemView.findViewById(R.id.tv_zhihu_daily_item_title);
+            imageView = (ImageView)itemView.findViewById(R.id.iv_zhihu_daily_item);
+            cardView = (CardView)itemView.findViewById(R.id.cv_zhihu_daily_item);
         }
 
-        public void bindItem(final ZhihuThemeItem zhihuThemeItem){
-            String id = zhihuThemeItem.getId();
-            Glide.with(mContext).load(zhihuThemeItem.getThumbnail()).centerCrop().into(imageView);
-            textView.setText(zhihuThemeItem.getName());
+        public void bindItem(final ZhihuHotItem item){
+            textView.setText(item.getTitle());
+            Glide.with(mContext).load(item.getThumbnail()).centerCrop().into(imageView);
             cardView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent();
-                    intent.setClass(mContext, ZhihuThemeContentActivity.class);
-                    intent.putExtra(Constants.ZHIHU_THEME_CONTENT_ID, String.valueOf(zhihuThemeItem.getId()));
-                    mContext.startActivity(intent);
+                    cardView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Intent intent = new Intent();
+                            intent.setClass(mContext, ZhihuDailyDetailActivity.class);
+                            intent.putExtra(Constants.ZHIHU_DAILY_DETAIL_ID, String.valueOf(item.getNews_id()));
+                            mContext.startActivity(intent);
+                        }
+                    });
                 }
             });
         }
     }
-
 }

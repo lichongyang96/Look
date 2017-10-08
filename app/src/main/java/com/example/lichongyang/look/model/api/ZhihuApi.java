@@ -4,6 +4,9 @@ import com.example.lichongyang.look.base.Constants;
 import com.example.lichongyang.look.model.bean.zhihu.ZhihuDaily;
 import com.example.lichongyang.look.model.bean.zhihu.ZhihuDailyDetail;
 import com.example.lichongyang.look.model.bean.zhihu.ZhihuDailyDetailExtra;
+import com.example.lichongyang.look.model.bean.zhihu.ZhihuHot;
+import com.example.lichongyang.look.model.bean.zhihu.ZhihuSection;
+import com.example.lichongyang.look.model.bean.zhihu.ZhihuSectionContent;
 import com.example.lichongyang.look.model.bean.zhihu.ZhihuTheme;
 import com.example.lichongyang.look.model.bean.zhihu.ZhihuThemeContent;
 
@@ -56,6 +59,33 @@ public interface ZhihuApi {
     @GET("themes")
     Observable<ZhihuTheme> getTheme();
 
+    /**
+     * 获取某一主题下的日报列表
+     * @param id
+     * @return
+     */
     @GET("theme/{id}")
     Observable<ZhihuThemeContent> getThemeContent(@Path("id") int id);
+
+    /**
+     * 获取专栏列表
+     * @return
+     */
+    @GET("sections")
+    Observable<ZhihuSection> getSections();
+
+    /**
+     * 获取某一专栏下的日报列表
+     * @param id
+     * @return
+     */
+    @GET("section/{id}")
+    Observable<ZhihuSectionContent> getSectionContent(@Path("id") int id);
+
+    /**
+     * 获取热门列表
+     * @return
+     */
+    @GET("news/hot")
+    Observable<ZhihuHot> getHot();
 }
